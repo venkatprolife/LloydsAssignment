@@ -5,6 +5,4 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class LloydsApplication : Application() {
-    // Hello
-    // Venkat
 }
