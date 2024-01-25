@@ -1,8 +1,8 @@
 package com.lloydsmobile.data.di
 
-import com.lloydsmobile.data.utils.ErrorInterceptor
 import com.lloydsmobile.data.services.DetailApiService
 import com.lloydsmobile.data.services.UsersApiService
+import com.lloydsmobile.data.utils.ErrorInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,21 +15,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-
     @Singleton
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder().baseUrl("https://reqres.in/").client(okHttpClient).addConverterFactory(
-            GsonConverterFactory.create()
+            GsonConverterFactory.create(),
         ).build()
     }
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(errorInterceptor: ErrorInterceptor) : OkHttpClient {
+    fun provideOkHttpClient(errorInterceptor: ErrorInterceptor): OkHttpClient {
         return OkHttpClient.Builder().addInterceptor(errorInterceptor).build()
     }
-
 
     @Singleton
     @Provides

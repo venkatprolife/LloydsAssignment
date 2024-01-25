@@ -7,5 +7,7 @@ import retrofit2.http.Path
 
 interface DetailApiService {
     @GET("/api/users/{id}")
-    suspend fun getUserById(@Path("id") id: String) : Response<SingleUserDto>
+    suspend fun getUserById(
+        @Path("id") id: String,
+    ): Response<SingleUserDto>
 }

@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface DetailRepository {
     val userDto: StateFlow<UserDto?>
+
     suspend fun getUserById(id: String)
 }

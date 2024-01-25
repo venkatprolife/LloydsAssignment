@@ -11,20 +11,22 @@ fun UserDto.toUserModel(): UserModel {
         lastName = this.last_name,
         avatar = this.avatar,
         email = this.email,
-        id = this.id
+        id = this.id,
     )
 }
 
 fun UsersListDto.toUserListModel(): UserListModel {
     val userListModel = UserListModel(emptyList())
     val userList: MutableList<UserModel> = mutableListOf()
-    this.data.forEach{
-        val userModel = UserModel(firstName = it.first_name,
-            lastName = it.last_name,
-            email = it.email,
-            avatar = it.avatar,
-            id = it.id,
-        )
+    this.data.forEach {
+        val userModel =
+            UserModel(
+                firstName = it.first_name,
+                lastName = it.last_name,
+                email = it.email,
+                avatar = it.avatar,
+                id = it.id,
+            )
         userList.add(userModel)
     }
     userListModel.userList = userList

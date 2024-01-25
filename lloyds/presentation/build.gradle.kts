@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -93,7 +94,6 @@ dependencies {
     // Glide
     implementation(libs.bumptech.glide)
     implementation(libs.glide.compose)
-
 
     // Mockito
     testImplementation(libs.mockito.core)
