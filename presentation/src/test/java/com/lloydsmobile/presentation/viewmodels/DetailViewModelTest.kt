@@ -41,7 +41,7 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun getUserModel_emptyTest() =
+    fun testGetUserModel_empty() =
         runTest {
             Mockito.`when`(getUserDetailUseCase.getUserById(ArgumentMatchers.anyString()))
                 .thenReturn(MutableStateFlow(UserModel()))
@@ -52,7 +52,7 @@ class DetailViewModelTest {
         }
 
     @Test
-    fun getUserModel_successTest() =
+    fun testGetUserModel_success() =
         runTest {
             Mockito.`when`(getUserDetailUseCase.getUserById(ArgumentMatchers.anyString()))
                 .thenReturn(MutableStateFlow(UserModel("lloyds", "", "", "", 1)))

@@ -22,23 +22,23 @@ class DetailRepositoryImplTest {
     }
 
     @Test
-    fun getUserById_nullTest() =
+    fun testGetUserById_null() =
         runTest {
             Mockito.`when`(detailApiService.getUserById("1")).thenReturn(Response.success(null))
 
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
             detailRepositoryImpl.getUserById("1")
-            assertEquals("", detailRepositoryImpl.userDto.value?.avatar)
+            assertEquals("", detailRepositoryImpl.userModel.value.avatar)
         }
 
     @Test
-    fun getUserById_successTest() =
+    fun testGetUserById_success() =
         runTest {
             val singleUserDto = SingleUserDto(UserDto("", "", "lloyds", 1, ""))
             Mockito.`when`(detailApiService.getUserById("1")).thenReturn(Response.success(singleUserDto))
 
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
             detailRepositoryImpl.getUserById("1")
-            assertEquals("lloyds", detailRepositoryImpl.userDto.value?.first_name)
+            assertEquals("lloyds", detailRepositoryImpl.userModel.value.firstName)
         }
 }

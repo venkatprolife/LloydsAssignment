@@ -1,14 +1,15 @@
 package com.lloydsmobile.domain.usecases
 
 import com.lloydsmobile.domain.model.UserListModel
-import com.lloydsmobile.domain.repository.UserRepositoryDomain
+import com.lloydsmobile.domain.repository.UserRepository
+import com.lloydsmobile.domain.util.Resource
 import javax.inject.Inject
 
 class GetUserUseCase
-    @Inject
-    constructor(private val userRepositoryDomain: UserRepositoryDomain) {
-        suspend fun getUsers(): UserListModel {
-            // Perform any necessary business logic or data transformations here
-            return userRepositoryDomain.getUsers()
-        }
+@Inject
+constructor(private val userRepository: UserRepository) {
+    suspend fun getUsers(): Resource<UserListModel> {
+        // Perform any necessary business logic or data transformations here
+        return userRepository.getUsers()
     }
+}

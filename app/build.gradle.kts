@@ -42,6 +42,8 @@ android {
 
 dependencies {
     implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     // Hilt Dependency Injection
     implementation(libs.hilt.android)

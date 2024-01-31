@@ -26,7 +26,7 @@ class UsersApiServiceTest {
     }
 
     @Test
-    fun getUsersNullTest() =
+    fun testGetUsersNull() =
         runTest {
             val mockResponse = MockResponse()
             mockResponse.setBody("null")
@@ -39,7 +39,7 @@ class UsersApiServiceTest {
         }
 
     @Test
-    fun getUsersSuccessTest() =
+    fun testGetUsersSuccess() =
         runTest {
             val mockResponse = MockResponse()
             val content = Helper.readFileResource("/response.json")
@@ -55,7 +55,7 @@ class UsersApiServiceTest {
         }
 
     @Test
-    fun getUsersErrorTest() =
+    fun testGetUsersError() =
         runTest {
             val mockResponse = MockResponse()
             mockResponse.setResponseCode(404)

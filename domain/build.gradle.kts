@@ -34,7 +34,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
 
     // Hilt Dependency Injection
     implementation(libs.hilt.android)

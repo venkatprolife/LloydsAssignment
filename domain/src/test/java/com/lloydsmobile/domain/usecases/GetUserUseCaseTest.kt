@@ -1,13 +1,11 @@
-package com.lloydsmobile.presentation.viewmodels
+package com.lloydsmobile.domain.usecases
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lloydsmobile.domain.model.UserListModel
 import com.lloydsmobile.domain.model.UserModel
-import com.lloydsmobile.domain.usecases.GetUserUseCase
+import com.lloydsmobile.domain.repository.UserRepository
 import com.lloydsmobile.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -15,20 +13,17 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class UserViewModelTest {
+class GetUserUseCaseTest {
+
     private val testDispatcher = StandardTestDispatcher()
 
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-
     @Mock
-    lateinit var getUserUseCase: GetUserUseCase
+    lateinit var userRepository: UserRepository
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -40,13 +35,13 @@ class UserViewModelTest {
     @Test
     fun testGetUserModel_empty() =
         runTest {
-            Mockito.`when`(getUserUseCase.getUsers())
+            Mockito.`when`(userRepository.getUsers())
                 .thenReturn(Resource.Success(UserListModel()))
 
-            val viewModel = UsersViewModel(getUserUseCase)
-            viewModel.getUserList()
+            val getUserUseCase = GetUserUseCase(userRepository)
+            val result = getUserUseCase.getUsers()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals(0, viewModel.userListState.value.data!!.userList.size)
+            Assert.assertEquals(0, result.data!!.userList.size)
         }
 
     @Test
@@ -61,13 +56,13 @@ class UserViewModelTest {
                     ),
                 )
 
-            Mockito.`when`(getUserUseCase.getUsers())
+            Mockito.`when`(userRepository.getUsers())
                 .thenReturn(Resource.Success(userListModel))
 
-            val viewModel = UsersViewModel(getUserUseCase)
-            viewModel.getUserList()
+            val getUserUseCase = GetUserUseCase(userRepository)
+            val result = getUserUseCase.getUsers()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals("lloyds2", viewModel.userListState.value.data!!.userList[1].firstName)
+            Assert.assertEquals("lloyds2", result.data!!.userList[1].firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)
