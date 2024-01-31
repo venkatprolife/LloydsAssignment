@@ -11,14 +11,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UsersViewModel @Inject constructor(private val userUseCase: GetUserUseCase): ViewModel() {
-    private val _userListModel = MutableStateFlow(UserListModel())
-    var userList : StateFlow<UserListModel> = _userListModel
+class UsersViewModel
+    @Inject
+    constructor(private val userUseCase: GetUserUseCase) : ViewModel() {
+        private val _userListModel = MutableStateFlow(UserListModel())
+        var userList: StateFlow<UserListModel> = _userListModel
 
-    fun getUserList() {
-        viewModelScope.launch {
-            val result = userUseCase.getUsers()
-            _userListModel.emit(result)
+        fun getUserList() {
+            viewModelScope.launch {
+                val result = userUseCase.getUsers()
+                _userListModel.emit(result)
+            }
         }
     }
-}

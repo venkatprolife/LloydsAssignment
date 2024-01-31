@@ -12,13 +12,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+const val BASE_URL = "https://reqres.in/"
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     @Singleton
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl("https://reqres.in/").client(okHttpClient).addConverterFactory(
+        return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(
             GsonConverterFactory.create(),
         ).build()
     }

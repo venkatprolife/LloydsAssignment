@@ -24,7 +24,6 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 
-
 @Composable
 fun UserListView(onClick: (userId: Int) -> Unit) {
     val usersViewModel: UsersViewModel = hiltViewModel()
@@ -34,43 +33,56 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
     if (usersList.value.userList.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize(1f),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = "Loading...")
         }
     } else {
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(
-            space = 36.dp), content = {
-            items(usersList.value.userList) { item ->
-                ListViewItem(
-                    item,
-                    onClick = onClick
-                )
-            }
-        })
+        LazyColumn(
+            verticalArrangement =
+                Arrangement.spacedBy(
+                    space = 36.dp,
+                ),
+            content = {
+                items(usersList.value.userList) { item ->
+                    ListViewItem(
+                        item,
+                        onClick = onClick,
+                    )
+                }
+            },
+        )
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ListViewItem(userModel: UserModel, onClick: (userId: Int) -> Unit) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .clickable {
-            onClick(userModel.id)
-        }) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+fun ListViewItem(
+    userModel: UserModel,
+    onClick: (userId: Int) -> Unit,
+) {
+    Card(
+        modifier =
+            Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .clickable {
+                    onClick(userModel.id)
+                },
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         ) {
-
             GlideImage(
                 model = userModel.avatar,
                 contentDescription = "",
-                modifier = Modifier.weight(
-                    .2f
-                ),
+                modifier =
+                    Modifier.weight(
+                        .2f,
+                    ),
             )
             ListViewItemColumn(userModel.firstName, userModel.lastName, userModel.email, Modifier.weight(.8f))
         }
@@ -82,7 +94,7 @@ private fun ListViewItemColumn(
     firstName: String,
     lastName: String,
     email: String,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Column(verticalArrangement = Arrangement.SpaceEvenly, modifier = modifier) {
         Text(text = firstName, fontWeight = FontWeight.Bold)

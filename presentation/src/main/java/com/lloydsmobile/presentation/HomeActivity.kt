@@ -20,13 +20,11 @@ import com.lloydsmobile.presentation.screens.UserDetails
 import com.lloydsmobile.presentation.screens.UserListView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
-
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +35,7 @@ class HomeActivity : ComponentActivity() {
                         TopAppBar(title = {
                             Text(text = "Users App")
                         })
-                    }
+                    },
                 ) {
                     Box(modifier = Modifier.padding(it)) {
                         App()
@@ -53,12 +51,18 @@ class HomeActivity : ComponentActivity() {
         NavHost(navController = navController, startDestination = "userlist") {
             composable(route = "userlist") {
                 UserListView {
-                    navController.navigate("userdetails/${it}")
+                    navController.navigate("userdetails/$it")
                 }
             }
-            composable(route = "userdetails/{userid}", arguments = listOf(navArgument("userid") {
-                type = NavType.StringType
-            })) {
+            composable(
+                route = "userdetails/{userid}",
+                arguments =
+                    listOf(
+                        navArgument("userid") {
+                            type = NavType.StringType
+                        },
+                    ),
+            ) {
                 UserDetails()
             }
         }

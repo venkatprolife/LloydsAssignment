@@ -6,11 +6,11 @@ import com.lloydsmobile.domain.model.UserListModel
 import javax.inject.Inject
 
 class UserRepositoryDomainImpl
-@Inject
-constructor(private val userRepository: UserRepository) :
+    @Inject
+    constructor(private val userRepository: UserRepository) :
     UserRepositoryDomain {
-    override suspend fun getUsers(): UserListModel {
-        val userListDto = userRepository.getUsers()
-        return userListDto.toUserListModel()
+        override suspend fun getUsers(): UserListModel {
+            val userListDto = userRepository.getUsers()
+            return userListDto.toUserListModel()
+        }
     }
-}

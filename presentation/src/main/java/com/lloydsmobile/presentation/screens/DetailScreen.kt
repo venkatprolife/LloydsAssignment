@@ -12,7 +12,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.presentation.viewmodels.DetailViewModel
 
-
 @Composable
 fun UserDetails() {
     val detailViewModel: DetailViewModel = hiltViewModel()
@@ -23,7 +22,11 @@ fun UserDetails() {
 
 @Composable
 fun DetailsView(userModel: UserModel?) {
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
         Text(text = "ID : ${userModel?.id}")
         Text(text = "First Name : ${userModel?.firstName}")
         Text(text = "Last Name : ${userModel?.lastName}")

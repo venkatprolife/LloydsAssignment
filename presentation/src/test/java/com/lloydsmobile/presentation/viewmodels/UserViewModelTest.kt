@@ -21,7 +21,6 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 class UserViewModelTest {
-
     private val testDispatcher = StandardTestDispatcher()
 
     @get:Rule
@@ -38,33 +37,36 @@ class UserViewModelTest {
     }
 
     @Test
-    fun getUserModel_emptyTest() = runTest {
-        Mockito.`when`(getUserUseCase.getUsers())
-            .thenReturn(MutableStateFlow(UserListModel()))
+    fun getUserModel_emptyTest() =
+        runTest {
+            Mockito.`when`(getUserUseCase.getUsers())
+                .thenReturn(MutableStateFlow(UserListModel()))
 
-        val viewModel = UsersViewModel(getUserUseCase)
-        viewModel.getUserList()
-        Assert.assertEquals(0, viewModel.userList.value.userList.size)
-    }
+            val viewModel = UsersViewModel(getUserUseCase)
+            viewModel.getUserList()
+            Assert.assertEquals(0, viewModel.userList.value.userList.size)
+        }
 
     @Test
-    fun getUserModel_successTest() = runTest {
-        val userListModel = UserListModel(
-            listOf<UserModel>(
-                UserModel("lloyds1", "", "", "", 1),
-                UserModel("lloyds2", "", "", "", 2),
-                UserModel("lloyds3", "", "", "", 3)
-            )
-        )
+    fun getUserModel_successTest() =
+        runTest {
+            val userListModel =
+                UserListModel(
+                    listOf<UserModel>(
+                        UserModel("lloyds1", "", "", "", 1),
+                        UserModel("lloyds2", "", "", "", 2),
+                        UserModel("lloyds3", "", "", "", 3),
+                    ),
+                )
 
-        Mockito.`when`(getUserUseCase.getUsers())
-            .thenReturn(MutableStateFlow(userListModel))
+            Mockito.`when`(getUserUseCase.getUsers())
+                .thenReturn(MutableStateFlow(userListModel))
 
-        val viewModel = UsersViewModel(getUserUseCase)
-        viewModel.getUserList()
-        testDispatcher.scheduler.advanceUntilIdle()
-        Assert.assertEquals("lloyds2", viewModel.userList.value.userList[1].firstName)
-    }
+            val viewModel = UsersViewModel(getUserUseCase)
+            viewModel.getUserList()
+            testDispatcher.scheduler.advanceUntilIdle()
+            Assert.assertEquals("lloyds2", viewModel.userList.value.userList[1].firstName)
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @After
