@@ -29,8 +29,8 @@ import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 fun UserListView(onClick: (userId: Int) -> Unit) {
     val usersViewModel: UsersViewModel = hiltViewModel()
     usersViewModel.getUserList()
-
     val result = usersViewModel.userListState.collectAsState().value
+
     if (result.isLoading) {
         Box(
             modifier = Modifier.fillMaxSize(1f),
@@ -53,7 +53,7 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
                 space = 36.dp,
             ),
             content = {
-                items(result.data.userList) { item ->
+                items(it.userList) { item ->
                     ListViewItem(
                         item,
                         onClick = onClick,

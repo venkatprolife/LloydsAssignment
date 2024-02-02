@@ -1,10 +1,8 @@
 package com.lloydsmobile.domain.repository
 
 import com.lloydsmobile.domain.model.UserModel
-import kotlinx.coroutines.flow.StateFlow
+import com.lloydsmobile.domain.util.Resource
 
 interface DetailRepository {
-    val userModel: StateFlow<UserModel>
-
-    suspend fun getUserById(id: String): StateFlow<UserModel>
+    suspend fun getUserById(id: String): Resource<UserModel>
 }

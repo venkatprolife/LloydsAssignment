@@ -22,7 +22,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun testGetUsers_emptyList() =
+    fun testGetUsersEmptyList() =
         runTest {
             Mockito.`when`(usersApiService.getUsers()).thenReturn(Response.success(UsersListDto()))
 
@@ -31,7 +31,7 @@ class UserRepositoryImplTest {
         }
 
     @Test
-    fun testGetUsers_successList() =
+    fun testGetUsersSuccessList() =
         runTest {
             val userListDto =
                 UsersListDto(
@@ -44,9 +44,8 @@ class UserRepositoryImplTest {
 
             Mockito.`when`(usersApiService.getUsers()).thenReturn(Response.success(userListDto))
 
-            val userRepositoryImpl = UserRepositoryImpl(usersApiService)
-            userRepositoryImpl.getUsers()
-            assertEquals(3, userRepositoryImpl.getUsers().data!!.userList.size)
-            assertEquals(2, userRepositoryImpl.getUsers().data!!.userList[1].id)
+            val users = UserRepositoryImpl(usersApiService).getUsers()
+            assertEquals(3, users.data!!.userList.size)
+            assertEquals(2, users.data!!.userList[1].id)
         }
 }

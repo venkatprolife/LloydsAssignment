@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.domain.usecases.GetUserDetailUseCase
+import com.lloydsmobile.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,26 +42,27 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun testGetUserModel_empty() =
+    fun testGetUserModelEmpty() =
         runTest {
             Mockito.`when`(getUserDetailUseCase.getUserById(ArgumentMatchers.anyString()))
-                .thenReturn(MutableStateFlow(UserModel()))
-
-            val viewModel = DetailViewModel(getUserDetailUseCase, savedStateHandle)
-            viewModel.getUser()
-            assertEquals(0, viewModel.userModel.value?.id)
-        }
-
-    @Test
-    fun testGetUserModel_success() =
-        runTest {
-            Mockito.`when`(getUserDetailUseCase.getUserById(ArgumentMatchers.anyString()))
-                .thenReturn(MutableStateFlow(UserModel("lloyds", "", "", "", 1)))
+                .thenReturn(Resource.Success(UserModel()))
 
             val viewModel = DetailViewModel(getUserDetailUseCase, savedStateHandle)
             viewModel.getUser()
             testDispatcher.scheduler.advanceUntilIdle()
-            assertEquals("lloyds", viewModel.userModel.value?.firstName)
+            assertEquals(0, viewModel.userDetailsState.value.data!!.id)
+        }
+
+    @Test
+    fun testGetUserModelSuccess() =
+        runTest {
+            Mockito.`when`(getUserDetailUseCase.getUserById(ArgumentMatchers.anyString()))
+                .thenReturn(Resource.Success(UserModel("lloyds", "", "", "", 1)))
+
+            val viewModel = DetailViewModel(getUserDetailUseCase, savedStateHandle)
+            viewModel.getUser()
+            testDispatcher.scheduler.advanceUntilIdle()
+            assertEquals("lloyds", viewModel.userDetailsState.value.data!!.firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

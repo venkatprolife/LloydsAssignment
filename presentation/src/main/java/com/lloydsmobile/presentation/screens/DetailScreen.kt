@@ -1,6 +1,7 @@
 package com.lloydsmobile.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -16,8 +17,16 @@ import com.lloydsmobile.presentation.viewmodels.DetailViewModel
 fun UserDetails() {
     val detailViewModel: DetailViewModel = hiltViewModel()
     detailViewModel.getUser()
-    val user = detailViewModel.userModel.collectAsState()
-    DetailsView(user.value)
+    val result = detailViewModel.userDetailsState.collectAsState().value
+    if (result.error.isNotBlank()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = result.error)
+        }
+    }
+
+    result.data?.let {
+        DetailsView(it)
+    }
 }
 
 @Composable
