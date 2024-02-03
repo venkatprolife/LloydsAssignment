@@ -7,7 +7,6 @@ import com.lloydsmobile.domain.usecases.GetUserUseCase
 import com.lloydsmobile.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -40,7 +39,7 @@ class UserViewModelTest {
     @Test
     fun testGetUserModel_empty() =
         runTest {
-            Mockito.`when`(getUserUseCase.getUsers())
+            Mockito.`when`(getUserUseCase())
                 .thenReturn(Resource.Success(UserListModel()))
 
             val viewModel = UsersViewModel(getUserUseCase)
@@ -61,7 +60,7 @@ class UserViewModelTest {
                     ),
                 )
 
-            Mockito.`when`(getUserUseCase.getUsers())
+            Mockito.`when`(getUserUseCase())
                 .thenReturn(Resource.Success(userListModel))
 
             val viewModel = UsersViewModel(getUserUseCase)

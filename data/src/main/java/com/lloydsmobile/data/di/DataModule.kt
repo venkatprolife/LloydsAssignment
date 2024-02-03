@@ -6,7 +6,6 @@ import com.lloydsmobile.data.services.DetailApiService
 import com.lloydsmobile.data.services.UsersApiService
 import com.lloydsmobile.domain.repository.DetailRepository
 import com.lloydsmobile.domain.repository.UserRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,13 +17,13 @@ import javax.inject.Singleton
 class DataModule {
     @Singleton
     @Provides
-    fun provideUserRepo(usersApiService: UsersApiService) : UserRepository {
+    fun provideUserRepo(usersApiService: UsersApiService): UserRepository {
         return UserRepositoryImpl(usersApiService)
     }
 
     @Singleton
     @Provides
-    fun provideDetailRepo(detailApiService: DetailApiService) : DetailRepository {
+    fun provideDetailRepo(detailApiService: DetailApiService): DetailRepository {
         return DetailRepositoryImpl(detailApiService)
     }
 }

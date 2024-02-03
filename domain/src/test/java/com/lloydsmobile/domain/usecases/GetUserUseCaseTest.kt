@@ -19,7 +19,6 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 class GetUserUseCaseTest {
-
     private val testDispatcher = StandardTestDispatcher()
 
     @Mock
@@ -39,7 +38,7 @@ class GetUserUseCaseTest {
                 .thenReturn(Resource.Success(UserListModel()))
 
             val getUserUseCase = GetUserUseCase(userRepository)
-            val result = getUserUseCase.getUsers()
+            val result = getUserUseCase()
             testDispatcher.scheduler.advanceUntilIdle()
             Assert.assertEquals(0, result.data!!.userList.size)
         }
@@ -60,7 +59,7 @@ class GetUserUseCaseTest {
                 .thenReturn(Resource.Success(userListModel))
 
             val getUserUseCase = GetUserUseCase(userRepository)
-            val result = getUserUseCase.getUsers()
+            val result = getUserUseCase()
             testDispatcher.scheduler.advanceUntilIdle()
             Assert.assertEquals("lloyds2", result.data!!.userList[1].firstName)
         }

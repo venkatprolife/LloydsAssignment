@@ -7,6 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -24,17 +25,19 @@ class DetailRepositoryImplTest {
     @Test
     fun testGetUserByIdEmpty() =
         runTest {
-            Mockito.`when`(detailApiService.getUserById("1")).thenReturn(Response.success(SingleUserDto(UserDto())))
+            Mockito.`when`(
+                detailApiService.getUserById(ArgumentMatchers.anyString()),
+            ).thenReturn(Response.success(SingleUserDto(UserDto())))
 
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
-            assertEquals("", detailRepositoryImpl.getUserById("1").data!!.avatar)
+            assertEquals("", detailRepositoryImpl.getUserById("1").data!!.url)
         }
 
     @Test
     fun testGetUserByIdSuccess() =
         runTest {
             val singleUserDto = SingleUserDto(UserDto("", "", "lloyds", 1, ""))
-            Mockito.`when`(detailApiService.getUserById("1")).thenReturn(Response.success(singleUserDto))
+            Mockito.`when`(detailApiService.getUserById(ArgumentMatchers.anyString())).thenReturn(Response.success(singleUserDto))
 
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
             assertEquals("lloyds", detailRepositoryImpl.getUserById("1").data!!.firstName)

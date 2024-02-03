@@ -1,9 +1,14 @@
 package com.lloydsmobile.data.models
 
+import com.google.gson.annotations.SerializedName
+
 data class UserDto(
-    val avatar: String = "",
+    @SerializedName("avatar")
+    val url: String = "",
     val email: String = "",
-    val first_name: String = "",
+    @SerializedName("first_name")
+    val firstName: String = "",
     val id: Int = 0,
-    val last_name: String = "defaultLastName",
+    @SerializedName("last_name")
+    val lastName: String = "defaultLastName",
 )

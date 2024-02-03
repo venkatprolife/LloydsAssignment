@@ -6,10 +6,10 @@ import com.lloydsmobile.domain.util.Resource
 import javax.inject.Inject
 
 class GetUserUseCase
-@Inject
-constructor(private val userRepository: UserRepository) {
-    suspend fun getUsers(): Resource<UserListModel> {
-        // Perform any necessary business logic or data transformations here
-        return userRepository.getUsers()
+    @Inject
+    constructor(private val userRepository: UserRepository) {
+        suspend operator fun invoke(): Resource<UserListModel> {
+            // Perform any necessary business logic or data transformations here
+            return userRepository.getUsers()
+        }
     }
-}

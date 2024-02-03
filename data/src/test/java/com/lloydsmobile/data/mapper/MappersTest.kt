@@ -6,9 +6,6 @@ import com.lloydsmobile.domain.mapper.toUserListModel
 import com.lloydsmobile.domain.mapper.toUserModel
 import com.lloydsmobile.domain.model.UserListModel
 import org.junit.Assert.*
-
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 
 class MappersTest {

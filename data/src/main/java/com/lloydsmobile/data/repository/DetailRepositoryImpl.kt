@@ -30,4 +30,4 @@ class DetailRepositoryImpl
                 Resource.Error("Something Went Wrong")
             }
         }
-}
+    }

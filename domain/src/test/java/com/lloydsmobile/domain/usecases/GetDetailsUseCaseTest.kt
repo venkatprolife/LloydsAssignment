@@ -1,9 +1,7 @@
-package com.lloydsmobile.presentation.viewmodels
+package com.lloydsmobile.domain.usecases
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.SavedStateHandle
 import com.lloydsmobile.domain.model.UserModel
-import com.lloydsmobile.domain.usecases.GetDetailsUseCase
+import com.lloydsmobile.domain.repository.DetailRepository
 import com.lloydsmobile.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,24 +12,17 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class DetailViewModelTest {
+class GetDetailsUseCaseTest {
     private val testDispatcher = StandardTestDispatcher()
 
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-
     @Mock
-    lateinit var getDetailsUseCase: GetDetailsUseCase
-
-    @Mock
-    lateinit var savedStateHandle: SavedStateHandle
+    lateinit var detailRepository: DetailRepository
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -43,31 +34,25 @@ class DetailViewModelTest {
     @Test
     fun testGetUserModelEmpty() =
         runTest {
-            Mockito.`when`(savedStateHandle.get<String>(ArgumentMatchers.anyString()))
-                .thenReturn("")
-
-            Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
+            Mockito.`when`(detailRepository.getUserById(ArgumentMatchers.anyString()))
                 .thenReturn(Resource.Success(UserModel()))
 
-            val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
-            viewModel.getUser()
+            val getDetailsUseCase = GetDetailsUseCase(detailRepository)
+            val result = getDetailsUseCase("1")
             testDispatcher.scheduler.advanceUntilIdle()
-            assertEquals(0, viewModel.userDetailsState.value.data!!.id)
+            assertEquals("", result.data!!.firstName)
         }
 
     @Test
     fun testGetUserModelSuccess() =
         runTest {
-            Mockito.`when`(savedStateHandle.get<String>(ArgumentMatchers.anyString()))
-                .thenReturn("")
-
-            Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
+            Mockito.`when`(detailRepository.getUserById(ArgumentMatchers.anyString()))
                 .thenReturn(Resource.Success(UserModel("lloyds", "", "", "", 1)))
 
-            val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
-            viewModel.getUser()
+            val getDetailsUseCase = GetDetailsUseCase(detailRepository)
+            val result = getDetailsUseCase("2")
             testDispatcher.scheduler.advanceUntilIdle()
-            assertEquals("lloyds", viewModel.userDetailsState.value.data!!.firstName)
+            assertEquals("lloyds", result.data!!.firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

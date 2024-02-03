@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.myapplication.ui.theme.LloydsAssignmentTheme
 import com.lloydsmobile.presentation.screens.UserDetails
 import com.lloydsmobile.presentation.screens.UserListView
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,15 +31,17 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         CoroutineScope(Dispatchers.Main).launch {
             setContent {
-                Scaffold(
-                    topBar = {
-                        TopAppBar(title = {
-                            Text(text = "Users App")
-                        })
-                    },
-                ) {
-                    Box(modifier = Modifier.padding(it)) {
-                        App()
+                LloydsAssignmentTheme {
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(title = {
+                                Text(text = "Users App")
+                            })
+                        },
+                    ) {
+                        Box(modifier = Modifier.padding(it)) {
+                            App()
+                        }
                     }
                 }
             }

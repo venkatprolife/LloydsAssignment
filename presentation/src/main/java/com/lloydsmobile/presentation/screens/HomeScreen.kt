@@ -11,9 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +29,9 @@ import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 @Composable
 fun UserListView(onClick: (userId: Int) -> Unit) {
     val usersViewModel: UsersViewModel = hiltViewModel()
-    usersViewModel.getUserList()
+    LaunchedEffect(Unit) {
+        usersViewModel.getUserList()
+    }
     val result = usersViewModel.userListState.collectAsState().value
 
     if (result.isLoading) {
@@ -36,22 +39,22 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
             modifier = Modifier.fillMaxSize(1f),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "Loading...")
+            Text(text = "Loading...", style = MaterialTheme.typography.headlineSmall)
         }
     }
 
     if (result.error.isNotBlank()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = result.error)
+            Text(text = result.error, style = MaterialTheme.typography.titleLarge)
         }
     }
 
     result.data?.let {
         LazyColumn(
             verticalArrangement =
-            Arrangement.spacedBy(
-                space = 36.dp,
-            ),
+                Arrangement.spacedBy(
+                    space = 36.dp,
+                ),
             content = {
                 items(it.userList) { item ->
                     ListViewItem(
@@ -72,26 +75,26 @@ fun ListViewItem(
 ) {
     Card(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .clickable {
-                onClick(userModel.id)
-            },
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onClick(userModel.id)
+                },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         ) {
             GlideImage(
-                model = userModel.avatar,
+                model = userModel.url,
                 contentDescription = "",
                 modifier =
-                Modifier.weight(
-                    .2f,
-                ),
+                    Modifier.weight(
+                        .2f,
+                    ),
             )
             ListViewItemColumn(userModel.firstName, userModel.lastName, userModel.email, Modifier.weight(.8f))
         }

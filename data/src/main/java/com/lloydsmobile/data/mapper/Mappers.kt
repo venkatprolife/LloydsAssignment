@@ -7,9 +7,9 @@ import com.lloydsmobile.domain.model.UserModel
 
 fun UserDto.toUserModel(): UserModel {
     return UserModel(
-        firstName = this.first_name,
-        lastName = this.last_name,
-        avatar = this.avatar,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        url = this.url,
         email = this.email,
         id = this.id,
     )
@@ -21,10 +21,10 @@ fun UsersListDto.toUserListModel(): UserListModel {
     this.data.forEach {
         val userModel =
             UserModel(
-                firstName = it.first_name,
-                lastName = it.last_name,
+                firstName = it.firstName,
+                lastName = it.lastName,
                 email = it.email,
-                avatar = it.avatar,
+                url = it.url,
                 id = it.id,
             )
         userList.add(userModel)
