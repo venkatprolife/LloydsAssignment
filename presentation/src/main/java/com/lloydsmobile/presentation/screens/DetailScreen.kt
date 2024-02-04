@@ -1,7 +1,6 @@
 package com.lloydsmobile.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lloydsmobile.domain.model.UserModel
+import com.lloydsmobile.presentation.ErrorMsg
+import com.lloydsmobile.presentation.Loading
 import com.lloydsmobile.presentation.R
 import com.lloydsmobile.presentation.viewmodels.DetailViewModel
 
@@ -24,24 +25,13 @@ fun UserDetails() {
     LaunchedEffect(Unit) {
         detailViewModel.getUser()
     }
-    val result = detailViewModel.userDetailsState.collectAsState().value
+    val state = detailViewModel.userDetailsState.collectAsState().value
 
-    if (result.isLoading) {
-        Box(
-            modifier = Modifier.fillMaxSize(1f),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(text = "Loading...", style = MaterialTheme.typography.headlineSmall)
-        }
-    }
+    if (state.isLoading) Loading()
 
-    if (result.error.isNotBlank()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = result.error, style = MaterialTheme.typography.titleLarge)
-        }
-    }
+    if (state.error.isNotBlank()) ErrorMsg(state.error)
 
-    result.data?.let {
+    state.data?.let {
         DetailsView(it)
     }
 }

@@ -2,16 +2,13 @@ package com.lloydsmobile.presentation.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +21,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.lloydsmobile.domain.model.UserModel
+import com.lloydsmobile.presentation.ErrorMsg
+import com.lloydsmobile.presentation.Loading
 import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 
 @Composable
@@ -32,37 +31,32 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
     LaunchedEffect(Unit) {
         usersViewModel.getUserList()
     }
-    val result = usersViewModel.userListState.collectAsState().value
+    val state = usersViewModel.userListState.collectAsState().value
 
-    if (result.isLoading) {
-        Box(
-            modifier = Modifier.fillMaxSize(1f),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(text = "Loading...", style = MaterialTheme.typography.headlineSmall)
-        }
+    if (state.isLoading) {
+        Loading()
     }
 
-    if (result.error.isNotBlank()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = result.error, style = MaterialTheme.typography.titleLarge)
-        }
+    if (state.error.isNotBlank()) {
+        ErrorMsg(state.error)
     }
 
-    result.data?.let {
+    state.data?.let {
         LazyColumn(
             verticalArrangement =
                 Arrangement.spacedBy(
-                    space = 36.dp,
+                    space = 16.dp,
                 ),
             content = {
-                items(it.userList) { item ->
+                items(it.userList, key = { item ->
+                    item.id
+                }) { item ->
                     ListViewItem(
                         item,
                         onClick = onClick,
                     )
                 }
-            },
+            }, modifier = Modifier.padding(top = 26.dp)
         )
     }
 }
@@ -79,7 +73,7 @@ fun ListViewItem(
                 .fillMaxWidth()
                 .clickable {
                     onClick(userModel.id)
-                },
+                }.padding(5.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -96,7 +90,12 @@ fun ListViewItem(
                         .2f,
                     ),
             )
-            ListViewItemColumn(userModel.firstName, userModel.lastName, userModel.email, Modifier.weight(.8f))
+            ListViewItemColumn(
+                userModel.firstName,
+                userModel.lastName,
+                userModel.email,
+                Modifier.weight(.8f),
+            )
         }
     }
 }

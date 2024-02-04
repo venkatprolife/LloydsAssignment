@@ -1,5 +1,6 @@
 package com.lloydsmobile.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,8 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -26,47 +25,50 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
+    private val navUserList = "userlist"
+    private val navUserDetails = "userdetails"
+    private val userId = "userid"
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CoroutineScope(Dispatchers.Main).launch {
             setContent {
                 LloydsAssignmentTheme {
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(title = {
-                                Text(text = "Users App")
-                            })
-                        },
-                    ) {
-                        Box(modifier = Modifier.padding(it)) {
-                            App()
-                        }
-                    }
+                    App()
                 }
             }
         }
     }
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun App() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "userlist") {
-            composable(route = "userlist") {
-                UserListView {
-                    navController.navigate("userdetails/$it")
-                }
+        Scaffold(
+            topBar = {
+                TopBar(navController)
             }
-            composable(
-                route = "userdetails/{userid}",
-                arguments =
-                    listOf(
-                        navArgument("userid") {
-                            type = NavType.StringType
-                        },
-                    ),
-            ) {
-                UserDetails()
+        ) {
+            Box(modifier = Modifier.padding(it)) {
+                NavHost(navController = navController, startDestination = navUserList) {
+                    composable(route = navUserList) {
+                        UserListView {
+                            navController.navigate("$navUserDetails/$it")
+                        }
+                    }
+                    composable(
+                        route = "$navUserDetails/{$userId}",
+                        arguments =
+                        listOf(
+                            navArgument(userId) {
+                                type = NavType.StringType
+                            },
+                        ),
+                    ) {
+                        UserDetails()
+                    }
+                }
             }
         }
     }
