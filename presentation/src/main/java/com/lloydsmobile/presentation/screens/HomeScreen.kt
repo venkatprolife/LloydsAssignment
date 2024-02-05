@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +24,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.presentation.ErrorMsg
 import com.lloydsmobile.presentation.Loading
+import com.lloydsmobile.presentation.R
 import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 
 @Composable
@@ -45,7 +47,7 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
         LazyColumn(
             verticalArrangement =
                 Arrangement.spacedBy(
-                    space = 16.dp,
+                    space = dimensionResource(id = R.dimen.user_list_space),
                 ),
             content = {
                 items(it.userList, key = { item ->
@@ -56,7 +58,7 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
                         onClick = onClick,
                     )
                 }
-            }, modifier = Modifier.padding(top = 26.dp)
+            }, modifier = Modifier.padding(top = dimensionResource(id = R.dimen.user_list_space_above))
         )
     }
 }
@@ -69,18 +71,19 @@ fun ListViewItem(
 ) {
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onClick(userModel.id)
-                }.padding(5.dp),
+        Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick(userModel.id)
+            }
+            .padding(dimensionResource(id = R.dimen.user_list_cardview_padding)),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         ) {
             GlideImage(
                 model = userModel.url,

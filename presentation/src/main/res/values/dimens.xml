@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_list_space">16.dp</dimen>
+    <dimen name="user_list_space_above">20.dp</dimen>
+    <dimen name="user_list_cardview_padding">5.dp</dimen>
+    <dimen name="user_list_item_row_padding">16.dp</dimen>
+    <dimen name="user_list_item_image_weight">.2f</dimen>
+    <dimen name="user_list_item_texts_weight">.8f</dimen>
+</resources>

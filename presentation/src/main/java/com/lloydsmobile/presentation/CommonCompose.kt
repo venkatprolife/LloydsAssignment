@@ -28,13 +28,14 @@ import androidx.navigation.NavHostController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(navController: NavHostController) {
-    var canBack by remember { mutableStateOf(false) }
+    var isStackAvailable by remember { mutableStateOf(false) }
+
     derivedStateOf {
         navController.previousBackStackEntry != null
     }
     DisposableEffect(navController) {
         val listener = NavController.OnDestinationChangedListener { controller, _, _ ->
-            canBack = controller.previousBackStackEntry != null
+            isStackAvailable = controller.previousBackStackEntry != null
         }
         navController.addOnDestinationChangedListener(listener)
         onDispose {
@@ -43,11 +44,9 @@ fun TopBar(navController: NavHostController) {
     }
 
     val navigationIcon: (@Composable () -> Unit)? =
-        if (canBack) {
+        if (isStackAvailable) {
             {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
+                IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(R.string.back_button),
@@ -59,14 +58,9 @@ fun TopBar(navController: NavHostController) {
             null
         }
 
-    if(canBack) {
+    if (isStackAvailable) {
         TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = R.string.lloyds_app),
-                    color = Color.White
-                )
-            },
+            title = { TextWhite(stringResource(id = R.string.lloyds_app)) },
             colors = TopAppBarDefaults.mediumTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
@@ -74,19 +68,13 @@ fun TopBar(navController: NavHostController) {
         )
     } else {
         TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = R.string.lloyds_app),
-                    color = Color.White
-                )
-            },
+            title = { TextWhite(stringResource(id = R.string.lloyds_app)) },
             colors = TopAppBarDefaults.mediumTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary
             )
         )
     }
 }
-
 
 
 @Composable
@@ -108,3 +96,11 @@ fun ErrorMsg(message: String) {
         Text(text = message, style = MaterialTheme.typography.titleLarge)
     }
 }
+
+@Composable
+fun TextWhite(text: String) =
+    Text(
+        text = text,
+        color = Color.White
+    )
+
