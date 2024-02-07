@@ -14,19 +14,21 @@ class UserRepositoryImpl
     constructor(private val usersApiService: UsersApiService) :
     UserRepository {
         override suspend fun getUsers(): Resource<UserListModel> {
-            return try {
+            try {
                 val response = usersApiService.getUsers()
                 if (response.isSuccessful && response.body() != null) {
-                    Resource.Success(response.body()!!.toUserListModel())
+                    return Resource.Success(response.body()?.toUserListModel())
                 } else if (response.errorBody() != null) {
-                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-                    Resource.Error(errorObj.getString("message"))
-                } else {
-                    Resource.Error("Something Went Wrong")
+                    val errorBody = response.errorBody()?.charStream()
+                    if (errorBody != null) {
+                        val errorObj = JSONObject(errorBody.readText())
+                        return Resource.Error(errorObj.getString("message"))
+                    }
                 }
             } catch (e: Exception) {
                 Log.d("Venkat", e.toString())
-                Resource.Error("Something Went Wrong")
+                return Resource.Error("Something Went Wrong")
             }
+            return Resource.Error("Something Went Wrong")
         }
     }

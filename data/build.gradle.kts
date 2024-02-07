@@ -29,10 +29,6 @@ dependencies {
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    kaptAndroidTest(libs.hilt.android.compiler)
-    // Hilt and Robolectric tests.
-    testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler)
 
     // Retrofit and gson
     implementation(libs.retrofit2.squareup)

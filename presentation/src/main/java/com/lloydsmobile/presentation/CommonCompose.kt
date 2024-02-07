@@ -58,13 +58,13 @@ fun TopBar(navController: NavHostController) {
             null
         }
 
-    if (isStackAvailable) {
+    if (isStackAvailable && navigationIcon != null) {
         TopAppBar(
             title = { TextWhite(stringResource(id = R.string.lloyds_app)) },
             colors = TopAppBarDefaults.mediumTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
-            navigationIcon = navigationIcon!!,
+            navigationIcon = navigationIcon,
         )
     } else {
         TopAppBar(

@@ -9,19 +9,21 @@ import com.lloydsmobile.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.android.components.ServiceComponent
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 class DataModule {
-    @Singleton
     @Provides
     fun provideUserRepo(usersApiService: UsersApiService): UserRepository {
         return UserRepositoryImpl(usersApiService)
     }
 
-    @Singleton
     @Provides
     fun provideDetailRepo(detailApiService: DetailApiService): DetailRepository {
         return DetailRepositoryImpl(detailApiService)

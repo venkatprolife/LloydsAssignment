@@ -51,7 +51,7 @@ class DetailApiServiceTest {
             mockWebServer.takeRequest()
 
             Assert.assertNotNull(response.body())
-            Assert.assertEquals("Bluth", response.body()!!.data.last_name)
+            Assert.assertEquals("Bluth", response.body()!!.data.lastName)
         }
 
     @Test

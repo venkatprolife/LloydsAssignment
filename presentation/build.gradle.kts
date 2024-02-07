@@ -64,38 +64,23 @@ dependencies {
 
     // Compose
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.compose.ui.tooling)
-
-    // Hilt Dependency Injection
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    // Hilt and instrumented tests.
-    androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
-    // Hilt and Robolectric tests.
-    testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler)
 
     // Glide
     implementation(libs.bumptech.glide)
     implementation(libs.glide.compose)
 
+    // Hilt Dependency Injection
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    testImplementation(libs.arch.core.testing)
+
     // Mockito
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
 
-    testImplementation(libs.arch.core.testing)
-    androidTestImplementation(libs.arch.core.testing)
-
-    // Local tests: jUnit, coroutines, Android runner
+    // Local tests: jUnit, coroutines
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-
-    // Instrumented tests: jUnit rules and runners
-
-    androidTestImplementation(libs.androidx.test.core)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.runner)
 }
