@@ -3,10 +3,10 @@ package com.lloydsmobile.data
 import java.io.InputStreamReader
 
 object Helper {
-    fun readFileResource(filenane: String): String {
-        val inputStrean = Helper::class.java.getResourceAsStream(filenane)
+    fun readFileResource(fileName: String): String {
+        val inputStream = Helper::class.java.getResourceAsStream(fileName)
         val builder = StringBuilder()
-        val reader = InputStreamReader(inputStrean, "UTF-8")
+        val reader = InputStreamReader(inputStream, "UTF-8")
         reader.readLines().forEach {
             builder.append(it)
         }

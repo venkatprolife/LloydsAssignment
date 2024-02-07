@@ -48,10 +48,10 @@ class GetUserUseCaseTest {
         runTest {
             val userListModel =
                 UserListModel(
-                    listOf<UserModel>(
-                        UserModel("lloyds1", "", "", "", 1),
-                        UserModel("lloyds2", "", "", "", 2),
-                        UserModel("lloyds3", "", "", "", 3),
+                    listOf(
+                        UserModel("mobile1", "", "", "", 1),
+                        UserModel("mobile2", "", "", "", 2),
+                        UserModel("mobile3", "", "", "", 3),
                     ),
                 )
 
@@ -61,7 +61,7 @@ class GetUserUseCaseTest {
             val getUserUseCase = GetUserUseCase(userRepository)
             val result = getUserUseCase()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals("lloyds2", result.data!!.userList[1].firstName)
+            Assert.assertEquals("mobile2", result.data!!.userList[1].firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

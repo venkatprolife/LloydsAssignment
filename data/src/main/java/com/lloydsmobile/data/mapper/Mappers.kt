@@ -1,4 +1,4 @@
-package com.lloydsmobile.domain.mapper
+package com.lloydsmobile.data.mapper
 
 import com.lloydsmobile.data.models.UserDto
 import com.lloydsmobile.data.models.UsersListDto

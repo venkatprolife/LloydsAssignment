@@ -3,10 +3,10 @@ This app consists of two screens
 
 Home Screen (List of users)
 Details Screen (User details)
-The following guideslines have been implemented
+The following guide lines have been implemented
 
 Module architecture with MVVM + CLEAN
-Jepack compose + Navigation
+Jetpack compose + Navigation
 Coroutines
 Interfaces
 Hilt dependency injection
@@ -16,6 +16,6 @@ Module structure is as follows
 
 Data layer - di - models - repository - services - utils
 
-Domain layer - di - mapper - model - repository - usecases
+Domain layer - di - mapper - model - repository - use cases
 
-Presentation Layer - screens - viewmodels
+Presentation Layer - screens - view models

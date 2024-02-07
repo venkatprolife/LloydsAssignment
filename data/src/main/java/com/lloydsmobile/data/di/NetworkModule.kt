@@ -7,18 +7,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 const val BASE_URL = "https://reqres.in/"
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class NetworkModule {
-
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(

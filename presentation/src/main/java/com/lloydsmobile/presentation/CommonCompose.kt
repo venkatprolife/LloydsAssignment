@@ -34,9 +34,10 @@ fun TopBar(navController: NavHostController) {
         navController.previousBackStackEntry != null
     }
     DisposableEffect(navController) {
-        val listener = NavController.OnDestinationChangedListener { controller, _, _ ->
-            isStackAvailable = controller.previousBackStackEntry != null
-        }
+        val listener =
+            NavController.OnDestinationChangedListener { controller, _, _ ->
+                isStackAvailable = controller.previousBackStackEntry != null
+            }
         navController.addOnDestinationChangedListener(listener)
         onDispose {
             navController.removeOnDestinationChangedListener(listener)
@@ -50,7 +51,7 @@ fun TopBar(navController: NavHostController) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(R.string.back_button),
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
             }
@@ -58,24 +59,35 @@ fun TopBar(navController: NavHostController) {
             null
         }
 
+    val route = navController.currentBackStackEntry?.destination?.route
     if (isStackAvailable && navigationIcon != null) {
         TopAppBar(
-            title = { TextWhite(stringResource(id = R.string.lloyds_app)) },
-            colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            ),
+            title = { TextWhite(getTitleByRoute(route = route)) },
+            colors =
+                TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
             navigationIcon = navigationIcon,
         )
     } else {
         TopAppBar(
-            title = { TextWhite(stringResource(id = R.string.lloyds_app)) },
-            colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+            title = { TextWhite(getTitleByRoute(route = route)) },
+            colors =
+                TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
         )
     }
 }
 
+@Composable
+fun getTitleByRoute(route: String?): String {
+    return when (route) {
+        USER_LIST -> stringResource(R.string.lloyds_app)
+        USER_DETAILS_ROUTE -> stringResource(id = R.string.user_details_title)
+        else -> stringResource(R.string.lloyds_app)
+    }
+}
 
 @Composable
 fun Loading() {
@@ -85,7 +97,7 @@ fun Loading() {
     ) {
         Text(
             text = stringResource(id = R.string.loading),
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.headlineSmall,
         )
     }
 }
@@ -101,6 +113,5 @@ fun ErrorMsg(message: String) {
 fun TextWhite(text: String) =
     Text(
         text = text,
-        color = Color.White
+        color = Color.White,
     )
-

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lloydsmobile.domain.usecases.GetDetailsUseCase
 import com.lloydsmobile.domain.util.Resource
+import com.lloydsmobile.presentation.USER_ID
 import com.lloydsmobile.presentation.util.UserDetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ class DetailViewModel
     ) : ViewModel() {
         private val _userDetailsState = MutableStateFlow(UserDetailsState())
         var userDetailsState: StateFlow<UserDetailsState> = _userDetailsState
-        private val userId = "userid"
+        private val userId = USER_ID
 
         fun getUser() {
             viewModelScope.launch {

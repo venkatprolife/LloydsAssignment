@@ -36,10 +36,10 @@ class DetailRepositoryImplTest {
     @Test
     fun testGetUserByIdSuccess() =
         runTest {
-            val singleUserDto = SingleUserDto(UserDto("", "", "lloyds", 1, ""))
+            val singleUserDto = SingleUserDto(UserDto("", "", "mobile", 1, ""))
             Mockito.`when`(detailApiService.getUserById(ArgumentMatchers.anyString())).thenReturn(Response.success(singleUserDto))
 
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
-            assertEquals("lloyds", detailRepositoryImpl.getUserById("1").data!!.firstName)
+            assertEquals("mobile", detailRepositoryImpl.getUserById("1").data!!.firstName)
         }
 }

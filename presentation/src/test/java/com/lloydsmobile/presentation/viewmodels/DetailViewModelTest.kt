@@ -62,12 +62,12 @@ class DetailViewModelTest {
                 .thenReturn("")
 
             Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel("lloyds", "", "", "", 1)))
+                .thenReturn(Resource.Success(UserModel("mobile", "", "", "", 1)))
 
             val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
             viewModel.getUser()
             testDispatcher.scheduler.advanceUntilIdle()
-            assertEquals("lloyds", viewModel.userDetailsState.value.data!!.firstName)
+            assertEquals("mobile", viewModel.userDetailsState.value.data!!.firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

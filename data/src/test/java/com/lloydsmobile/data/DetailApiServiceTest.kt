@@ -12,8 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class DetailApiServiceTest {
-    lateinit var mockWebServer: MockWebServer
-    lateinit var detailApiService: DetailApiService
+    private lateinit var mockWebServer: MockWebServer
+    private lateinit var detailApiService: DetailApiService
 
     @Before
     fun setUp() {

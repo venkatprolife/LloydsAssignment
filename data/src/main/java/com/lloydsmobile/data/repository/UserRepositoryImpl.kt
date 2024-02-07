@@ -1,8 +1,8 @@
 package com.lloydsmobile.data.repository
 
 import android.util.Log
+import com.lloydsmobile.data.mapper.toUserListModel
 import com.lloydsmobile.data.services.UsersApiService
-import com.lloydsmobile.domain.mapper.toUserListModel
 import com.lloydsmobile.domain.model.UserListModel
 import com.lloydsmobile.domain.repository.UserRepository
 import com.lloydsmobile.domain.util.Resource

@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Lloyds Application</string>
     <string name="lloyds_app">Lloyds App</string>
+    <string name="user_details_title">User Details</string>
     <string name="id">ID</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="url">URL</string>
     <string name="email">Email</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="back_button">Back</string>
 </resources>

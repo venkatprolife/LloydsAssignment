@@ -8,13 +8,13 @@
         android:name=".LloydsApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyLloydsAssignment"
         tools:targetApi="31">
         <activity
             android:name="com.lloydsmobile.presentation.HomeActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.MyLloydsAssignment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

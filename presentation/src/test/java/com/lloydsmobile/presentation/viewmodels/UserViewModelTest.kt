@@ -53,10 +53,10 @@ class UserViewModelTest {
         runTest {
             val userListModel =
                 UserListModel(
-                    listOf<UserModel>(
-                        UserModel("lloyds1", "", "", "", 1),
-                        UserModel("lloyds2", "", "", "", 2),
-                        UserModel("lloyds3", "", "", "", 3),
+                    listOf(
+                        UserModel("mobile1", "", "", "", 1),
+                        UserModel("mobile2", "", "", "", 2),
+                        UserModel("mobile3", "", "", "", 3),
                     ),
                 )
 
@@ -66,7 +66,7 @@ class UserViewModelTest {
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals("lloyds2", viewModel.userListState.value.data!!.userList[1].firstName)
+            Assert.assertEquals("mobile2", viewModel.userListState.value.data!!.userList[1].firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

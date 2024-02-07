@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -58,7 +57,8 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
                         onClick = onClick,
                     )
                 }
-            }, modifier = Modifier.padding(top = dimensionResource(id = R.dimen.user_list_space_above))
+            },
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.user_list_space_above)),
         )
     }
 }
@@ -71,19 +71,19 @@ fun ListViewItem(
 ) {
     Card(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .clickable {
-                onClick(userModel.id)
-            }
-            .padding(dimensionResource(id = R.dimen.user_list_cardview_padding)),
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onClick(userModel.id)
+                }
+                .padding(dimensionResource(id = R.dimen.user_list_card_view_padding)),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(dimensionResource(id = R.dimen.user_list_item_row_padding)),
         ) {
             GlideImage(
                 model = userModel.url,

@@ -37,19 +37,34 @@ fun UserDetails() {
 }
 
 @Composable
-fun DetailsView(userModel: UserModel?) {
+fun DetailsView(userModel: UserModel) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        val listTitle = listOf(R.string.id, R.string.first_name, R.string.last_name, R.string.url, R.string.email)
-        val listValue = listOf(userModel?.id, userModel?.firstName, userModel?.lastName, userModel?.url, userModel?.email)
-        for (i in listTitle.indices) {
-            Column {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = stringResource(id = listTitle[i]), style = MaterialTheme.typography.titleMedium)
-                    Text(text = " : ${listValue[i]}", style = MaterialTheme.typography.labelMedium)
+        val listTitle =
+            listOf(
+                R.string.id,
+                R.string.first_name,
+                R.string.last_name,
+                R.string.url,
+                R.string.email,
+            )
+        userModel.run {
+            val listValue = listOf(id, firstName, lastName, url, email)
+            for (i in listTitle.indices) {
+                Column {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = stringResource(id = listTitle[i]),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Text(
+                            text = " : ${listValue[i]}",
+                            style = MaterialTheme.typography.labelMedium,
+                        )
+                    }
                 }
             }
         }

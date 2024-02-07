@@ -35,7 +35,7 @@ class UserRepositoryImplTest {
         runTest {
             val userListDto =
                 UsersListDto(
-                    listOf<UserDto>(
+                    listOf(
                         UserDto("", "", "", 1, ""),
                         UserDto("", "", "", 2, ""),
                         UserDto("", "", "", 3, ""),
