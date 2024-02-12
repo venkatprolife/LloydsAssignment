@@ -45,9 +45,9 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
     state.data?.let {
         LazyColumn(
             verticalArrangement =
-                Arrangement.spacedBy(
-                    space = dimensionResource(id = R.dimen.user_list_space),
-                ),
+            Arrangement.spacedBy(
+                space = dimensionResource(id = R.dimen.user_list_space),
+            ),
             content = {
                 items(it.userList, key = { item ->
                     item.id
@@ -71,34 +71,36 @@ fun ListViewItem(
 ) {
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onClick(userModel.id)
-                }
-                .padding(dimensionResource(id = R.dimen.user_list_card_view_padding)),
+        Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick(userModel.id)
+            }
+            .padding(dimensionResource(id = R.dimen.user_list_card_view_padding)),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.user_list_item_row_padding)),
+            Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(id = R.dimen.user_list_item_row_padding)),
         ) {
             GlideImage(
                 model = userModel.url,
                 contentDescription = "",
                 modifier =
-                    Modifier.weight(
-                        .2f,
-                    ),
+                Modifier.weight(
+                    .2f,
+                ),
             )
-            ListViewItemColumn(
-                userModel.firstName,
-                userModel.lastName,
-                userModel.email,
-                Modifier.weight(.8f),
-            )
+            userModel.run {
+                ListViewItemColumn(
+                    firstName,
+                    lastName,
+                    email,
+                    Modifier.weight(.8f),
+                )
+            }
         }
     }
 }

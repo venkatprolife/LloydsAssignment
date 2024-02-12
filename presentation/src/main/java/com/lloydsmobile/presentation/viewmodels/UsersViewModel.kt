@@ -27,7 +27,7 @@ class UsersViewModel
                         _userListState.value = UserListState(data = resource.data, isLoading = false)
                     }
 
-                    is Resource.Error -> {
+                    else -> {
                         _userListState.value = UserListState(error = resource.message.toString(), isLoading = false)
                     }
                 }
