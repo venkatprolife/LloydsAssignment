@@ -27,7 +27,7 @@ class DetailRepositoryImplTest {
         runTest {
             Mockito.`when`(
                 detailApiService.getUserById(ArgumentMatchers.anyString()),
-            ).thenReturn(Response.success(SingleUserDto(UserDto())))
+            ).thenReturn(Response.success(SingleUserDto(UserDto("", "", "", 0, ""))))
 
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
             assertEquals("", detailRepositoryImpl.getUserById("1").data!!.url)

@@ -9,7 +9,7 @@ import org.junit.Test
 class MappersTest {
     @Test
     fun testToUserModelEmpty() {
-        val userModel = UserDto().toUserModel()
+        val userModel = UserDto("", "", "", 0, "defaultLastName").toUserModel()
         assertEquals("", userModel.firstName)
         assertEquals("defaultLastName", userModel.lastName)
     }

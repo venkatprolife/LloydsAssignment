@@ -35,7 +35,7 @@ class GetDetailsUseCaseTest {
     fun testGetUserModelEmpty() =
         runTest {
             Mockito.`when`(detailRepository.getUserById(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel()))
+                .thenReturn(Resource.Success(UserModel("", "", "", "", 0)))
 
             val getDetailsUseCase = GetDetailsUseCase(detailRepository)
             val result = getDetailsUseCase("1")

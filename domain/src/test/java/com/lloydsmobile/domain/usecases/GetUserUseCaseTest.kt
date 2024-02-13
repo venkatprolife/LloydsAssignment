@@ -35,7 +35,7 @@ class GetUserUseCaseTest {
     fun testGetUserModelEmpty() =
         runTest {
             Mockito.`when`(userRepository.getUsers())
-                .thenReturn(Resource.Success(UserListModel()))
+                .thenReturn(Resource.Success(UserListModel(emptyList())))
 
             val getUserUseCase = GetUserUseCase(userRepository)
             val result = getUserUseCase()

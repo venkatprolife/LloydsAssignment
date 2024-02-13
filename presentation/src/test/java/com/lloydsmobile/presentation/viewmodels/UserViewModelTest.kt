@@ -40,12 +40,12 @@ class UserViewModelTest {
     fun testGetUserModel_empty() =
         runTest {
             Mockito.`when`(getUserUseCase())
-                .thenReturn(Resource.Success(UserListModel()))
+                .thenReturn(Resource.Success(UserListModel(emptyList())))
 
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals(0, viewModel.userListState.value.data!!.userList.size)
+            Assert.assertEquals(0, viewModel.userListState.value.data.userList.size)
         }
 
     @Test
@@ -66,7 +66,7 @@ class UserViewModelTest {
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals("mobile2", viewModel.userListState.value.data!!.userList[1].firstName)
+            Assert.assertEquals("mobile2", viewModel.userListState.value.data.userList[1].firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

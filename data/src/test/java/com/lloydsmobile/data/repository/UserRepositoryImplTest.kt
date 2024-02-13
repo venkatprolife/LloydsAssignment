@@ -24,7 +24,9 @@ class UserRepositoryImplTest {
     @Test
     fun testGetUsersEmptyList() =
         runTest {
-            Mockito.`when`(usersApiService.getUsers()).thenReturn(Response.success(UsersListDto()))
+            Mockito.`when`(usersApiService.getUsers()).thenReturn(Response.success(UsersListDto(
+                emptyList()
+            )))
 
             val userRepositoryImpl = UserRepositoryImpl(usersApiService)
             assertEquals(0, userRepositoryImpl.getUsers().data!!.userList.size)

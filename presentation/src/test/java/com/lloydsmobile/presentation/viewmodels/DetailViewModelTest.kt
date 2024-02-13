@@ -47,7 +47,7 @@ class DetailViewModelTest {
                 .thenReturn("")
 
             Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel()))
+                .thenReturn(Resource.Success(UserModel("", "", "", "", 0)))
 
             val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
             viewModel.getUser()
