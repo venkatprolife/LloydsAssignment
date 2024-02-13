@@ -14,23 +14,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UsersViewModel
-    @Inject
-    constructor(private val userUseCase: GetUserUseCase) : ViewModel() {
-        private val _userListState = MutableStateFlow(UserListState())
-        var userListState: StateFlow<UserListState> = _userListState
+@Inject
+constructor(private val userUseCase: GetUserUseCase) : ViewModel() {
+    private val _userListState = MutableStateFlow(UserListState())
+    var userListState: StateFlow<UserListState> = _userListState
 
-        fun getUserList() {
-            viewModelScope.launch {
-                _userListState.update { it.copy(isLoading = true) }
-                when (val resource = userUseCase()) {
-                    is Resource.Success -> {
-                        _userListState.value = UserListState(data = resource.data, isLoading = false)
-                    }
+    init {
+        getUserList()
+    }
 
-                    else -> {
-                        _userListState.value = UserListState(error = resource.message.toString(), isLoading = false)
-                    }
+    fun getUserList() {
+        viewModelScope.launch {
+            _userListState.update { it.copy(isLoading = true) }
+            when (val resource = userUseCase()) {
+                is Resource.Success -> {
+                    _userListState.value = UserListState(data = resource.data, isLoading = false)
+                }
+
+                else -> {
+                    _userListState.value =
+                        UserListState(error = resource.message.toString(), isLoading = false)
                 }
             }
         }
     }
+}

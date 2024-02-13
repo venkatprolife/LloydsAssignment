@@ -29,9 +29,6 @@ import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 @Composable
 fun UserListView(onClick: (userId: Int) -> Unit) {
     val usersViewModel: UsersViewModel = hiltViewModel()
-    LaunchedEffect(Unit) {
-        usersViewModel.getUserList()
-    }
     val state = usersViewModel.userListState.collectAsState().value
 
     if (state.isLoading) {

@@ -17,6 +17,7 @@ class UserRepositoryImpl
             try {
                 val response = usersApiService.getUsers()
                 if (response.isSuccessful && response.body() != null) {
+                    Log.d("Venkat", "Response: " + response.body().toString())
                     return Resource.Success(response.body()?.toUserListModel())
                 } else if (response.errorBody() != null) {
                     val errorBody = response.errorBody()?.charStream()

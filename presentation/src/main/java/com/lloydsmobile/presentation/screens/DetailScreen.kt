@@ -22,9 +22,6 @@ import com.lloydsmobile.presentation.viewmodels.DetailViewModel
 @Composable
 fun UserDetails() {
     val detailViewModel: DetailViewModel = hiltViewModel()
-    LaunchedEffect(Unit) {
-        detailViewModel.getUser()
-    }
     val state = detailViewModel.userDetailsState.collectAsState().value
 
     if (state.isLoading) Loading()

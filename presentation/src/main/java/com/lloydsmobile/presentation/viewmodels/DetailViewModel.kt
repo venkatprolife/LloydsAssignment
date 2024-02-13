@@ -16,34 +16,38 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel
-    @Inject
-    constructor(
-        private val getDetailsUseCase: GetDetailsUseCase,
-        private val savedStateHandle: SavedStateHandle,
-    ) : ViewModel() {
-        private val _userDetailsState = MutableStateFlow(UserDetailsState())
-        var userDetailsState: StateFlow<UserDetailsState> = _userDetailsState
-        private val userId = USER_ID
+@Inject
+constructor(
+    private val getDetailsUseCase: GetDetailsUseCase,
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
+    private val _userDetailsState = MutableStateFlow(UserDetailsState())
+    var userDetailsState: StateFlow<UserDetailsState> = _userDetailsState
+    private val userId = USER_ID
 
-        fun getUser() {
-            viewModelScope.launch {
-                _userDetailsState.update { it.copy(isLoading = true) }
-                val id = savedStateHandle.get<String>(userId)
-                if (id != null) {
-                    when (val resource = getDetailsUseCase(id)) {
-                        is Resource.Success -> {
-                            _userDetailsState.value = UserDetailsState(data = resource.data)
-                        }
+    init {
+        getUser()
+    }
 
-                        is Resource.Error -> {
-                            _userDetailsState.value =
-                                UserDetailsState(error = resource.message.toString())
-                        }
+    fun getUser() {
+        viewModelScope.launch {
+            _userDetailsState.update { it.copy(isLoading = true) }
+            val id = savedStateHandle.get<String>(userId)
+            if (id != null) {
+                when (val resource = getDetailsUseCase(id)) {
+                    is Resource.Success -> {
+                        _userDetailsState.value = UserDetailsState(data = resource.data)
                     }
-                } else {
-                    _userDetailsState.value =
-                        UserDetailsState(error = "Something went wrong")
+
+                    is Resource.Error -> {
+                        _userDetailsState.value =
+                            UserDetailsState(error = resource.message.toString())
+                    }
                 }
+            } else {
+                _userDetailsState.value =
+                    UserDetailsState(error = "Something went wrong")
             }
         }
     }
+}
