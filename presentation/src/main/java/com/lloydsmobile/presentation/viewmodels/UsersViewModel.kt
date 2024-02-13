@@ -28,7 +28,9 @@ constructor(private val userUseCase: GetUserUseCase) : ViewModel() {
             _userListState.update { it.copy(isLoading = true) }
             when (val resource = userUseCase()) {
                 is Resource.Success -> {
-                    _userListState.value = UserListState(data = resource.data, isLoading = false)
+                    resource.data?.let {
+                        _userListState.value = UserListState(data = it, isLoading = false)
+                    }
                 }
 
                 else -> {
