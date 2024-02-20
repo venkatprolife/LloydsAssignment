@@ -2,7 +2,6 @@ package com.lloydsmobile.data.mapper
 
 import com.lloydsmobile.data.models.UserDto
 import com.lloydsmobile.data.models.UsersListDto
-import com.lloydsmobile.domain.model.UserListModel
 import com.lloydsmobile.domain.model.UserModel
 
 fun UserDto.toUserModel(): UserModel {
@@ -15,20 +14,18 @@ fun UserDto.toUserModel(): UserModel {
     )
 }
 
-fun UsersListDto.toUserListModel(): UserListModel {
-    val userListModel = UserListModel(emptyList())
-    val userList: MutableList<UserModel> = mutableListOf()
-    this.data.forEach {
-        val userModel =
+fun UsersListDto.toUserListModel(): List<UserModel> {
+    return this.data.map {
+        it
+    }.map { userDto ->
+        with(userDto) {
             UserModel(
-                firstName = it.firstName,
-                lastName = it.lastName,
-                email = it.email,
-                url = it.url,
-                id = it.id,
+                firstName = firstName,
+                lastName = lastName,
+                email = email,
+                url = url,
+                id = id,
             )
-        userList.add(userModel)
+        }
     }
-    userListModel.userList = userList
-    return userListModel
 }

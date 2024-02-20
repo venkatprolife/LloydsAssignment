@@ -1,9 +1,9 @@
 package com.lloydsmobile.presentation.util
 
-import com.lloydsmobile.domain.model.UserListModel
+import com.lloydsmobile.domain.model.UserModel
 
 data class UserListState(
     val isLoading: Boolean = false,
-    val data: UserListModel = UserListModel(emptyList()),
+    val data: List<UserModel> = emptyList(),
     val error: String = "",
 )

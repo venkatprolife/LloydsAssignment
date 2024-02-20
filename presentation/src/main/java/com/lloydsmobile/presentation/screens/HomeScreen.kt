@@ -46,7 +46,7 @@ fun UserListView(onClick: (userId: Int) -> Unit) {
                 space = dimensionResource(id = R.dimen.user_list_space),
             ),
             content = {
-                items(it.userList, key = { item ->
+                items(it, key = { item ->
                     item.id
                 }) { item ->
                     ListViewItem(

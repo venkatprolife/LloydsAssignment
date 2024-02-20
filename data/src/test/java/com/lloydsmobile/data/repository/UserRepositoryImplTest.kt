@@ -29,7 +29,7 @@ class UserRepositoryImplTest {
             )))
 
             val userRepositoryImpl = UserRepositoryImpl(usersApiService)
-            assertEquals(0, userRepositoryImpl.getUsers().data!!.userList.size)
+            assertEquals(0, userRepositoryImpl.getUsers().data?.size)
         }
 
     @Test
@@ -47,7 +47,7 @@ class UserRepositoryImplTest {
             Mockito.`when`(usersApiService.getUsers()).thenReturn(Response.success(userListDto))
 
             val users = UserRepositoryImpl(usersApiService).getUsers()
-            assertEquals(3, users.data!!.userList.size)
-            assertEquals(2, users.data!!.userList[1].id)
+            assertEquals(3, users.data?.size)
+            assertEquals(2, users.data!![1].id)
         }
 }

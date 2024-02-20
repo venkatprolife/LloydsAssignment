@@ -3,7 +3,7 @@ package com.lloydsmobile.data.repository
 import android.util.Log
 import com.lloydsmobile.data.mapper.toUserListModel
 import com.lloydsmobile.data.services.UsersApiService
-import com.lloydsmobile.domain.model.UserListModel
+import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.domain.repository.UserRepository
 import com.lloydsmobile.domain.util.Resource
 import org.json.JSONObject
@@ -13,7 +13,7 @@ class UserRepositoryImpl
     @Inject
     constructor(private val usersApiService: UsersApiService) :
     UserRepository {
-        override suspend fun getUsers(): Resource<UserListModel> {
+        override suspend fun getUsers(): Resource<List<UserModel>> {
             try {
                 val response = usersApiService.getUsers()
                 if (response.isSuccessful && response.body() != null) {

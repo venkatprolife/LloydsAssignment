@@ -1,7 +1,6 @@
 package com.lloydsmobile.presentation.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.lloydsmobile.domain.model.UserListModel
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.domain.usecases.GetUserUseCase
 import com.lloydsmobile.domain.util.Resource
@@ -40,33 +39,32 @@ class UserViewModelTest {
     fun testGetUserModel_empty() =
         runTest {
             Mockito.`when`(getUserUseCase())
-                .thenReturn(Resource.Success(UserListModel(emptyList())))
+                .thenReturn(Resource.Success(emptyList()))
 
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals(0, viewModel.userListState.value.data.userList.size)
+            Assert.assertEquals(0, viewModel.userListState.value.data.size)
         }
 
     @Test
     fun testGetUserModel_success() =
         runTest {
-            val userListModel =
-                UserListModel(
+            val userListModels =
                     listOf(
                         UserModel("mobile1", "", "", "", 1),
                         UserModel("mobile2", "", "", "", 2),
                         UserModel("mobile3", "", "", "", 3),
-                    ),
-                )
+                    )
+
 
             Mockito.`when`(getUserUseCase())
-                .thenReturn(Resource.Success(userListModel))
+                .thenReturn(Resource.Success(userListModels))
 
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()
             testDispatcher.scheduler.advanceUntilIdle()
-            Assert.assertEquals("mobile2", viewModel.userListState.value.data.userList[1].firstName)
+            Assert.assertEquals("mobile2", viewModel.userListState.value.data[1].firstName)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

@@ -2,7 +2,7 @@ package com.lloydsmobile.data.mapper
 
 import com.lloydsmobile.data.models.UserDto
 import com.lloydsmobile.data.models.UsersListDto
-import com.lloydsmobile.domain.model.UserListModel
+import com.lloydsmobile.domain.model.UserModel
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -23,13 +23,13 @@ class MappersTest {
 
     @Test
     fun testToUserListModelEmpty() {
-        val userListModel = UserListModel(emptyList())
-        assertEquals(0, userListModel.userList.size)
+        val userListModels:List<UserModel> = emptyList()
+        assertEquals(0, userListModels.size)
     }
 
     @Test
     fun testToUserListModelSuccess() {
-        val userListModel =
+        val userListModels =
             UsersListDto(
                 listOf(
                     UserDto("url1", "dummy@mail.com1", "", 1, ""),
@@ -37,8 +37,8 @@ class MappersTest {
                     UserDto("url3", "dummy@mail.com3", "", 3, ""),
                 ),
             ).toUserListModel()
-        assertEquals(3, userListModel.userList.size)
-        assertEquals(2, userListModel.userList[1].id)
-        assertEquals("dummy@mail.com3", userListModel.userList[2].email)
+        assertEquals(3, userListModels.size)
+        assertEquals(2, userListModels[1].id)
+        assertEquals("dummy@mail.com3", userListModels[2].email)
     }
 }
