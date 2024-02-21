@@ -5,6 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.domain.usecases.GetDetailsUseCase
 import com.lloydsmobile.domain.util.Resource
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -27,27 +31,24 @@ class DetailViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Mock
+    @MockK
     lateinit var getDetailsUseCase: GetDetailsUseCase
 
-    @Mock
+    @MockK
     lateinit var savedStateHandle: SavedStateHandle
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
     }
 
     @Test
     fun testGetUserModelEmpty() =
         runTest {
-            Mockito.`when`(savedStateHandle.get<String>(ArgumentMatchers.anyString()))
-                .thenReturn("")
-
-            Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel("", "", "", "", 0)))
+            every { savedStateHandle.get<String>(any()) } returns ""
+            coEvery { getDetailsUseCase(ArgumentMatchers.anyString()) } returns Resource.Success(UserModel("", "", "", "", 0))
 
             val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
             viewModel.getUser()
@@ -58,8 +59,7 @@ class DetailViewModelTest {
     @Test
     fun testGetUserModelSuccess() =
         runTest {
-            Mockito.`when`(savedStateHandle.get<String>(ArgumentMatchers.anyString()))
-                .thenReturn("")
+            every { savedStateHandle.get<String>(any()) } returns ""
 
             Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
                 .thenReturn(Resource.Success(UserModel("mobile", "", "", "", 1)))

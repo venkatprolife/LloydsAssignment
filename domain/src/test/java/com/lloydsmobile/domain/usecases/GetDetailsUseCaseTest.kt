@@ -3,39 +3,37 @@ package com.lloydsmobile.domain.usecases
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.domain.repository.DetailRepository
 import com.lloydsmobile.domain.util.Resource
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 
 class GetDetailsUseCaseTest {
     private val testDispatcher = StandardTestDispatcher()
 
-    @Mock
+    @MockK
     lateinit var detailRepository: DetailRepository
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
     }
 
     @Test
     fun testGetUserModelEmpty() =
-        runTest {
-            Mockito.`when`(detailRepository.getUserById(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel("", "", "", "", 0)))
+        runBlocking {
+            coEvery { detailRepository.getUserById(any()) } returns Resource.Success(UserModel("", "", "", "", 0))
 
             val getDetailsUseCase = GetDetailsUseCase(detailRepository)
             val result = getDetailsUseCase("1")
@@ -45,9 +43,8 @@ class GetDetailsUseCaseTest {
 
     @Test
     fun testGetUserModelSuccess() =
-        runTest {
-            Mockito.`when`(detailRepository.getUserById(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel("mobile", "", "", "", 1)))
+        runBlocking {
+            coEvery { detailRepository.getUserById(any()) } returns Resource.Success(UserModel("mobile", "", "", "", 1))
 
             val getDetailsUseCase = GetDetailsUseCase(detailRepository)
             val result = getDetailsUseCase("2")

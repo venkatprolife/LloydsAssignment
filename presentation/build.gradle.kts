@@ -76,9 +76,8 @@ dependencies {
     kapt(libs.hilt.compiler)
     testImplementation(libs.arch.core.testing)
 
-    // Mockito
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    // Mockk
+    testImplementation(libs.mockk.mockk)
 
     // Local tests: jUnit, coroutines
     testImplementation(libs.junit)

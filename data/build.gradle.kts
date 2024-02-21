@@ -38,9 +38,12 @@ dependencies {
     implementation(libs.retrofit2.gson)
 
     // Mockito
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    /*testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)*/
     testImplementation(libs.mock.web.server)
+
+    // Mockk
+    testImplementation(libs.mockk.mockk)
 
     // Local tests: jUnit, coroutines, Android runner
     testImplementation(libs.junit)

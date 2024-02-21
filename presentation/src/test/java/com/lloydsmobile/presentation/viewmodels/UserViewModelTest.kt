@@ -4,6 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lloydsmobile.domain.model.UserModel
 import com.lloydsmobile.domain.usecases.GetUserUseCase
 import com.lloydsmobile.domain.util.Resource
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -25,21 +28,20 @@ class UserViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Mock
+    @MockK
     lateinit var getUserUseCase: GetUserUseCase
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
     }
 
     @Test
     fun testGetUserModel_empty() =
         runTest {
-            Mockito.`when`(getUserUseCase())
-                .thenReturn(Resource.Success(emptyList()))
+            coEvery { getUserUseCase() } returns Resource.Success(emptyList())
 
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()
@@ -57,9 +59,7 @@ class UserViewModelTest {
                         UserModel("mobile3", "", "", "", 3),
                     )
 
-
-            Mockito.`when`(getUserUseCase())
-                .thenReturn(Resource.Success(userListModels))
+            coEvery { getUserUseCase() } returns Resource.Success(userListModels)
 
             val viewModel = UsersViewModel(getUserUseCase)
             viewModel.getUserList()

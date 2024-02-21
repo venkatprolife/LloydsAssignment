@@ -28,9 +28,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    // Mockito
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    // Mockk
+    testImplementation(libs.mockk.mockk)
 
     // Local tests: jUnit, coroutines, Android runner
     testImplementation(libs.junit)
