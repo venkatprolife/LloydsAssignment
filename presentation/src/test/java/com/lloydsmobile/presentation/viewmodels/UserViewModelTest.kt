@@ -22,6 +22,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
+/**
+ * View model for the user list screen
+ */
 class UserViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
 

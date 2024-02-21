@@ -4,6 +4,9 @@ import com.lloydsmobile.data.models.UserDto
 import com.lloydsmobile.data.models.UsersListDto
 import com.lloydsmobile.domain.model.UserModel
 
+/**
+ * Mapper class to convert dto to model objects
+ */
 fun UserDto.toUserModel(): UserModel {
     return UserModel(
         firstName = this.firstName,

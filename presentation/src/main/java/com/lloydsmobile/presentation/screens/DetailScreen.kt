@@ -19,6 +19,9 @@ import com.lloydsmobile.presentation.Loading
 import com.lloydsmobile.presentation.R
 import com.lloydsmobile.presentation.viewmodels.DetailViewModel
 
+/**
+ * Details of user screen
+ */
 @Composable
 fun UserDetails() {
     val detailViewModel: DetailViewModel = hiltViewModel()

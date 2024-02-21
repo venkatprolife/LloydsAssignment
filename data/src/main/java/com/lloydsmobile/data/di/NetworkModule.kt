@@ -11,14 +11,17 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "https://reqres.in/"
-
+/**
+ * HILT Dependency module: Retrofit, usersAPI and detailsAPI
+ */
 @Module
 @InstallIn(ViewModelComponent::class)
 class NetworkModule {
+    private val baseUrl = "https://reqres.in/"
+
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(
+        return Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient).addConverterFactory(
             GsonConverterFactory.create(),
         ).build()
     }

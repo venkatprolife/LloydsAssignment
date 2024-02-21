@@ -11,6 +11,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
+/**
+ * Dependency support: Implementation details for UserRepo and DetailRepo
+ */
 @Module
 @InstallIn(ViewModelComponent::class)
 class DataModule {

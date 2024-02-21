@@ -9,22 +9,24 @@ import javax.inject.Inject
 class ErrorInterceptor
     @Inject
     constructor() : Interceptor {
+        private val TAG = ErrorInterceptor::class.qualifiedName
+
         override fun intercept(chain: Interceptor.Chain): Response {
             val request: Request = chain.request()
             val response = chain.proceed(request)
-            Log.d("Venkat", "Response code: ${response.code()}")
+            Log.d(TAG, "Response code: ${response.code()}")
             when (response.code()) {
                 400 -> {
-                    Log.d("Venkat", "Show Bad Request Error Message")
+                    Log.d(TAG, "Show Bad Request Error Message")
                 }
                 401 -> {
-                    Log.d("Venkat", "Show UnauthorizedError Message")
+                    Log.d(TAG, "Show UnauthorizedError Message")
                 }
                 403 -> {
-                    Log.d("Venkat", "Show Forbidden Message")
+                    Log.d(TAG, "Show Forbidden Message")
                 }
                 404 -> {
-                    Log.d("Venkat", "Show NotFound Message")
+                    Log.d(TAG, "Show NotFound Message")
                 }
             }
             return response

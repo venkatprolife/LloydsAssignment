@@ -25,6 +25,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
+/**
+ * View model for the details screen
+ */
 class DetailViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
 

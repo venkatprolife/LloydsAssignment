@@ -11,10 +11,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,20 +26,21 @@ import com.lloydsmobile.presentation.Loading
 import com.lloydsmobile.presentation.R
 import com.lloydsmobile.presentation.viewmodels.UsersViewModel
 
+/**
+ * User list screen
+ */
 @Composable
 fun UserListView(onClick: (userId: Int) -> Unit) {
     val usersViewModel: UsersViewModel = hiltViewModel()
     val state = usersViewModel.userListState.collectAsState().value
 
-    if (state.isLoading) {
+    if (state.isLoading)
         Loading()
-    }
 
-    if (state.error.isNotBlank()) {
+    if (state.error.isNotBlank())
         ErrorMsg(state.error)
-    }
 
-    state.data?.let {
+    state.data.let {
         LazyColumn(
             verticalArrangement =
             Arrangement.spacedBy(
