@@ -29,7 +29,6 @@ class DetailRepositoryImplTest {
         runBlocking {
             val singleUserDto = mockk<SingleUserDto>(relaxed = true)
             coEvery { detailApiService.getUserById(any()) } returns Response.success(singleUserDto)
-
             val detailRepositoryImpl = DetailRepositoryImpl(detailApiService)
             assertEquals("", detailRepositoryImpl.getUserById("1").data!!.url)
         }

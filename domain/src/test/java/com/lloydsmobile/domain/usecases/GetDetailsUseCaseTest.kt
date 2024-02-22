@@ -6,6 +6,7 @@ import com.lloydsmobile.domain.util.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -32,8 +33,8 @@ class GetDetailsUseCaseTest {
     @Test
     fun testGetUserModelEmpty() =
         runBlocking {
-            coEvery { detailRepository.getUserById(any()) } returns Resource.Success(UserModel("", "", "", "", 0))
-
+            val userModel = mockk<UserModel>(relaxed = true)
+            coEvery { detailRepository.getUserById(any()) } returns Resource.Success(userModel)
             val getDetailsUseCase = GetDetailsUseCase(detailRepository)
             val result = getDetailsUseCase("1")
             testDispatcher.scheduler.advanceUntilIdle()

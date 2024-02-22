@@ -6,6 +6,7 @@ import com.lloydsmobile.domain.util.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -33,7 +34,6 @@ class GetUserUseCaseTest {
     fun testGetUserModelEmpty() =
         runTest {
             coEvery { userRepository.getUsers() } returns Resource.Success(emptyList())
-
             val getUserUseCase = GetUserUseCase(userRepository)
             val result = getUserUseCase()
             testDispatcher.scheduler.advanceUntilIdle()

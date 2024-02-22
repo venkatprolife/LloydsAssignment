@@ -9,6 +9,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -52,7 +53,8 @@ class DetailViewModelTest {
     fun testGetUserModelEmpty() =
         runTest {
             every { savedStateHandle.get<String>(any()) } returns ""
-            coEvery { getDetailsUseCase(any()) } returns Resource.Success(UserModel("", "", "", "", 0))
+            val userModel = mockk<UserModel>(relaxed = true)
+            coEvery { getDetailsUseCase(any()) } returns Resource.Success(userModel)
 
             val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
             viewModel.getUser()

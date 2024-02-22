@@ -50,7 +50,6 @@ class UserViewModelTest {
     fun testGetUserModelEmpty() =
         runTest {
             coEvery { getUserUseCase() } returns Resource.Success(emptyList())
-
             val viewModel = UsersViewModel(getUserUseCase)
             testDispatcher.scheduler.advanceUntilIdle()
             Assert.assertEquals(0, viewModel.userListState.value.data.size)
