@@ -58,6 +58,17 @@ class GetUserUseCaseTest {
             assertEquals("mobile2", result.data!![1].firstName)
         }
 
+    @Test
+    fun testGetUserModelFailureError() =
+        runTest {
+            val message = "Something Went Wrong"
+            coEvery { userRepository.getUsers() } returns Resource.Error(message)
+            val getUserUseCase = GetUserUseCase(userRepository)
+            val result = getUserUseCase()
+            testDispatcher.scheduler.advanceUntilIdle()
+            assertEquals(message, result.message)
+        }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @After
     fun tearDown() {

@@ -23,7 +23,7 @@ constructor(private val userUseCase: GetUserUseCase) : ViewModel() {
         getUserList()
     }
 
-    fun getUserList() {
+    private fun getUserList() {
         viewModelScope.launch {
             _userListState.update { it.copy(isLoading = true) }
             when (val resource = userUseCase()) {

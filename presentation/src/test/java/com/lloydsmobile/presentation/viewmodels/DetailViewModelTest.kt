@@ -16,6 +16,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -51,7 +52,7 @@ class DetailViewModelTest {
     fun testGetUserModelEmpty() =
         runTest {
             every { savedStateHandle.get<String>(any()) } returns ""
-            coEvery { getDetailsUseCase(ArgumentMatchers.anyString()) } returns Resource.Success(UserModel("", "", "", "", 0))
+            coEvery { getDetailsUseCase(any()) } returns Resource.Success(UserModel("", "", "", "", 0))
 
             val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
             viewModel.getUser()
@@ -63,15 +64,25 @@ class DetailViewModelTest {
     fun testGetUserModelSuccess() =
         runTest {
             every { savedStateHandle.get<String>(any()) } returns ""
-
-            Mockito.`when`(getDetailsUseCase(ArgumentMatchers.anyString()))
-                .thenReturn(Resource.Success(UserModel("mobile", "", "", "", 1)))
+            coEvery { getDetailsUseCase(any()) } returns Resource.Success(UserModel("mobile", "", "", "", 1))
 
             val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
             viewModel.getUser()
             testDispatcher.scheduler.advanceUntilIdle()
             assertEquals("mobile", viewModel.userDetailsState.value.data!!.firstName)
         }
+
+    @Test
+    fun testGetUserModelFailureError() {
+        runTest {
+            val message = "Something Went Wrong"
+            every { savedStateHandle.get<String>(any()) } returns ""
+            coEvery { getDetailsUseCase(any()) } returns Resource.Error(message)
+            val viewModel = DetailViewModel(getDetailsUseCase, savedStateHandle)
+            testDispatcher.scheduler.advanceUntilIdle()
+            assertEquals(message, viewModel.userDetailsState.value.error)
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @After

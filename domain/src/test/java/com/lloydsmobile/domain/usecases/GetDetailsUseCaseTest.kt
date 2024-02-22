@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -19,10 +20,8 @@ import org.junit.Test
 
 class GetDetailsUseCaseTest {
     private val testDispatcher = StandardTestDispatcher()
-
     @MockK
     lateinit var detailRepository: DetailRepository
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
@@ -50,6 +49,17 @@ class GetDetailsUseCaseTest {
             val result = getDetailsUseCase("2")
             testDispatcher.scheduler.advanceUntilIdle()
             assertEquals("mobile", result.data!!.firstName)
+        }
+
+    @Test
+    fun testGetUserModelFailureError() =
+        runTest {
+            val message = "Something Went Wrong"
+            coEvery { detailRepository.getUserById(any()) } returns Resource.Error(message)
+            val getDetailsUseCase = GetDetailsUseCase(detailRepository)
+            val result = getDetailsUseCase("2")
+            testDispatcher.scheduler.advanceUntilIdle()
+            assertEquals(message, result.message)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)

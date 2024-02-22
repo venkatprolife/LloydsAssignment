@@ -12,17 +12,16 @@ import javax.inject.Inject
  * This class fetches the Details of User through API
  */
 class DetailRepositoryImpl
-    @Inject
-    constructor(private val detailApiService: DetailApiService) :
+@Inject
+constructor(private val detailApiService: DetailApiService) :
     DetailRepository, BaseRepo() {
-        override suspend fun getUserById(id: String): Resource<UserModel> {
-            val result: Resource<SingleUserDto> = safeApiCall { detailApiService.getUserById(id) }
-            if (result is Resource.Success && result.data != null) {
-                val userDto = result.data?.data
-                if (userDto != null) {
-                    return Resource.Success(userDto.toUserModel())
-                }
-            }
-            return Resource.Error(result.message!!)
+    override suspend fun getUserById(id: String): Resource<UserModel> {
+        val result: Resource<SingleUserDto> = safeApiCall { detailApiService.getUserById(id) }
+        if (result is Resource.Success && result.data != null) {
+            val userDto = result.data?.data
+            if (userDto != null)
+                return Resource.Success(userDto.toUserModel())
         }
+        return Resource.Error(result.message!!)
     }
+}
